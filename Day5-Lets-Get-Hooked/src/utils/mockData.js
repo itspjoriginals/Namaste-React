@@ -7,7 +7,7 @@ export const resList = [
     areaName: "Tagore Garden",
     costForTwo: "₹400 for two",
     cuisines: ["Biryani", "Hyderabadi", "Lucknowi", "Kebabs", "Desserts", "Beverages"],
-    avgRating: 4.4,
+    avgRating: 3.4,
     totalRatingsString: "12K+",
     promoted: true,
     sla: {
