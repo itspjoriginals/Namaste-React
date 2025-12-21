@@ -1,0 +1,453 @@
+/* =====================
+   GLOBAL STYLES
+===================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Inter", "Segoe UI", sans-serif;
+  background-color: #f8f9fb;
+  color: #1f2937;
+}
+
+/* =====================
+   BODY
+===================== */
+.body {
+  padding: 20px 40px;
+}
+
+/* =====================
+   SEARCH BAR
+===================== */
+.search {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 20px;
+    margin: 20px auto;
+    max-width: 900px;
+}
+
+.search-input {
+    flex: 1;
+    padding: 12px 16px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    outline: none;
+    transition: all 0.25s ease;
+}
+
+.search-input:focus {
+    border-color: #fc8019;
+    box-shadow: 0 0 0 3px rgba(252, 128, 25, 0.15);
+}
+
+.search button {
+    padding: 12px 20px;
+    background-color: #fc8019;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.search button:hover {
+    background-color: #e86f10;
+    transform: translateY(-1px);
+}
+
+
+/* =====================
+   RESTAURANT CONTAINER
+===================== */
+.res-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 25px;
+}
+
+/* =====================
+   RESTAURANT CARD
+===================== */
+.res-card {
+  background: white;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.res-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+}
+
+/* =====================
+   IMAGE
+===================== */
+.res-logo {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+/* =====================
+   CARD CONTENT
+===================== */
+.res-card h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 12px 14px 6px;
+}
+
+.res-card h4 {
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin: 4px 14px;
+  color: #6b7280;
+}
+
+/* =====================
+   RATING & DELIVERY
+===================== */
+.res-card h4:nth-of-type(4) {
+  color: #16a34a;
+  font-weight: 700;
+}
+
+.res-card h4:last-child {
+  font-weight: 600;
+  color: #ef4444;
+  margin-bottom: 14px;
+}
+
+/* =====================
+   RESPONSIVE
+===================== */
+@media (max-width: 768px) {
+  .header {
+    padding: 10px 20px;
+  }
+
+  .body {
+    padding: 20px;
+  }
+
+  .nav-items > ul {
+    gap: 14px;
+    font-size: 0.9rem;
+  }
+}
+
+/* =====================
+   PREMIUM FILTER BUTTON - ENHANCED
+===================== */
+.filter-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px; /* Reduced for tighter spacing */
+  background: var(--bg-glass);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border: 1px solid var(--border-light);
+  color: var(--text-primary);
+  font-weight: 600;
+  font-size: clamp(1rem, 2.5vw, 1.05rem); /* Fluid typography */
+  padding: clamp(16px, 3vw, 20px) clamp(28px, 6vw, 40px);
+  border-radius: 24px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* Smoother easing */
+  box-shadow: 
+    0 4px 14px rgba(0, 0, 0, 0.08),
+    0 1px 3px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  position: relative;
+  overflow: hidden;
+  min-height: 60px;
+  margin: 0 0 40px 0;
+  letter-spacing: -0.025em;
+  font-variation-settings: 'wght' 550; /* Slightly lighter for better readability */
+  text-decoration: none;
+  user-select: none;
+  white-space: nowrap;
+  touch-action: manipulation; /* Better mobile performance */
+  will-change: transform, box-shadow; /* Optimize animations */
+}
+
+.filter-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: 
+    linear-gradient(90deg, 
+      transparent 0%,
+      rgba(255, 255, 255, 0.1) 50%,
+      transparent 100%
+    ),
+    radial-gradient(circle at 30% 30%, rgba(168, 85, 247, 0.12) 0%, transparent 50%);
+  transition: left 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.filter-btn:hover::before {
+  left: 100%;
+}
+
+.filter-btn:hover {
+  transform: translateY(-4px) scale(1.015);
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.12),
+    0 8px 20px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  border-color: rgba(168, 85, 247, 0.3);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.filter-btn:active {
+  transform: translateY(-2px) scale(1.005);
+  transition: transform 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Active/Filter Applied State */
+.filter-btn.active,
+.filter-btn.filter-applied {
+  background: 
+    linear-gradient(145deg, 
+      hsl(var(--accent-1-hue) 70% 55%) 0%,
+      hsl(var(--accent-2-hue) 75% 60%) 100%
+    ),
+    linear-gradient(145deg, rgba(255,255,255,0.15) 0%, transparent 100%);
+  border-color: rgba(168, 85, 247, 0.6);
+  box-shadow: 
+    0 0 0 1px rgba(168, 85, 247, 0.4),
+    0 25px 50px rgba(168, 85, 247, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  transform: translateY(-3px) scale(1.01);
+  color: #ffffff !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.filter-btn.active::before,
+.filter-btn.filter-applied::before {
+  background: linear-gradient(90deg, 
+    rgba(255,255,255,0.3) 0%,
+    rgba(255,255,255,0.5) 50%,
+    rgba(255,255,255,0.3) 100%
+  );
+  left: 100%;
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0%, 100% { left: -100%; }
+  50% { left: 100%; }
+}
+
+/* Enhanced Star icon */
+.filter-btn::after {
+  content: '★';
+  font-size: 1.15rem;
+  font-weight: 900;
+  opacity: 0.7;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-left: 2px;
+  filter: drop-shadow(0 1px 1px rgba(0,0,0,0.1));
+}
+
+.filter-btn:hover::after,
+.filter-btn.active::after,
+.filter-btn.filter-applied::after {
+  opacity: 1;
+  transform: scale(1.08) rotate(5deg);
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.15));
+}
+
+/* Enhanced Focus & Accessibility */
+.filter-btn:focus-visible {
+  outline: none;
+  box-shadow: 
+    0 0 0 3px rgba(168, 85, 247, 0.4),
+    0 0 0 6px rgba(168, 85, 247, 0.2);
+}
+
+.filter-btn:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Loading State */
+.filter-btn.loading {
+  pointer-events: none;
+  color: transparent;
+}
+
+.filter-btn.loading::after {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* RESPONSIVE - Mobile First */
+.filter-btn {
+  width: clamp(200px, 90vw, 320px);
+  margin-bottom: clamp(24px, 8vw, 40px);
+}
+
+@media (min-width: 481px) {
+  .filter-btn {
+    width: auto;
+  }
+}
+
+@media (min-width: 769px) {
+  .filter-btn {
+    border-radius: 28px;
+    min-height: 64px;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .filter-btn {
+    border-width: 2px;
+  }
+  
+  .filter-btn.active,
+  .filter-btn.filter-applied {
+    border-width: 2px;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .filter-btn,
+  .filter-btn::before,
+  .filter-btn::after {
+    transition: none;
+    animation: none;
+  }
+  
+  .filter-btn:hover {
+    transform: none;
+  }
+}
+
+/* =====================
+   SHIMMER SEARCH BAR
+===================== */
+.shimmer-search {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 25px;
+  padding: 10px 30px;
+}
+
+.shimmer-search-input {
+  flex: 1;
+  height: 45px;
+  border-radius: 10px;
+  background: linear-gradient(
+    90deg,
+    #e5e7eb 25%,
+    #f3f4f6 37%,
+    #e5e7eb 63%
+  );
+  background-size: 400% 100%;
+  animation: shimmer 1.4s infinite linear;
+}
+
+.shimmer-search-btn {
+  width: 160px;
+  height: 45px;
+  border-radius: 10px;
+  background: linear-gradient(
+    90deg,
+    #e5e7eb 25%,
+    #f3f4f6 37%,
+    #e5e7eb 63%
+  );
+  background-size: 400% 100%;
+  animation: shimmer 1.4s infinite linear;
+}
+
+/* =====================
+   SHIMMER CONTAINER
+===================== */
+.shimmer-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 25px;
+  padding: 10px 30px;
+}
+
+/* =====================
+   SHIMMER CARD
+===================== */
+.shimmer-card {
+  background: white;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+/* Image */
+.shimmer-card::before {
+  content: "";
+  display: block;
+  height: 180px;
+  background: linear-gradient(
+    90deg,
+    #e5e7eb 25%,
+    #f3f4f6 37%,
+    #e5e7eb 63%
+  );
+  background-size: 400% 100%;
+  animation: shimmer 1.4s infinite linear;
+}
+
+/* Text */
+.shimmer-card::after {
+  content: "";
+  display: block;
+  height: 90px;
+  margin: 12px;
+  border-radius: 10px;
+  background: linear-gradient(
+    90deg,
+    #e5e7eb 25%,
+    #f3f4f6 37%,
+    #e5e7eb 63%
+  );
+  background-size: 400% 100%;
+  animation: shimmer 1.4s infinite linear;
+}
+
+/* =====================
+   SHIMMER ANIMATION
+===================== */
+@keyframes shimmer {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: -100% 0;
+  }
+}
+
+
