@@ -1,0 +1,89 @@
+/* =====================
+   ERROR PAGE
+===================== */
+
+.error-page {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: #f9fafb;
+}
+
+.error-card {
+  max-width: 420px;
+  width: 100%;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 32px 28px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.error-code {
+  font-size: 72px;
+  font-weight: 800;
+  color: #f97316; /* Swiggy orange */
+  margin-bottom: 8px;
+}
+
+.error-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 8px;
+}
+
+.error-text {
+  font-size: 14px;
+  color: #6b7280;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+/* Buttons */
+.error-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.error-btn {
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease;
+}
+
+.error-btn.primary {
+  background: #f97316;
+  color: #ffffff;
+}
+
+.error-btn.primary:hover {
+  background: #ea580c;
+}
+
+.error-btn.secondary {
+  background: #f3f4f6;
+  color: #1f2937;
+}
+
+.error-btn.secondary:hover {
+  background: #e5e7eb;
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .error-card {
+    padding: 28px 20px;
+  }
+
+  .error-code {
+    font-size: 60px;
+  }
+}
