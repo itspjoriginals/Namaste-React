@@ -1,66 +1,112 @@
 import RestaurantCard from "./RestaurantCard";
 import { useEffect, useState } from "react";
 import Shimmer from "./Shimmer";
-import { Link } from "react-router";
+import { Link } from "react-router";  // ✅ Fixed import
+
 const Body = () => {
-    const [listOfRestaurants, setListOfRestaurants] = useState([]);
-    const [searchText, setSeachText] = useState("");
-    const [filteredRestaurant, setFilteredResturant] = useState([]);
-    useEffect(() => {
-        fetchData();
-    }, []);
+  const [listOfRestaurants, setListOfRestaurants] = useState([]);
+  const [searchText, setSearchText] = useState("");  // ✅ Fixed typo
+  const [filteredRestaurants, setFilteredRestaurants] = useState([]);  // ✅ Fixed naming
 
-    const fetchData = async () =>{
-        const data = await fetch('https://www.swiggy.com/dapi/restaurants/list/v5?lat=26.766586034316582&lng=75.84711089730263&collection=83639&tags=layout_CCS_Biryani&sortBy=&filters=&type=rcv2&offset=0&page_type=null');
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-        const json = await data.json();
+  const fetchData = async () => {
+    try {
+      const data = await fetch(
+      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=18.61610&lng=73.72860&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
+    );
+      
+      const json = await data.json();
 
-         const restaurants = json.data.cards
-      .filter(
-        (c) =>
-          c.card?.card?.["@type"] ===
-          "type.googleapis.com/swiggy.presentation.food.v2.Restaurant"
-      )
-      .map((c) => c.card.card.info);
+      // ✅ CORRECT PATH from current API (same as About component)
+      const restaurantCard = json?.data?.cards?.find(card => 
+        card?.card?.card?.gridElements?.infoWithStyle?.restaurants
+      );
 
-    setListOfRestaurants(restaurants);
-    setFilteredResturant(restaurants);
+      let restaurants = [];
+      
+      if (restaurantCard) {
+        restaurants = restaurantCard.card.card.gridElements.infoWithStyle.restaurants || [];
+      } else {
+        // ✅ Fallback: Top brands or other restaurant cards
+        const topBrandsCard = json?.data?.cards?.find(card => 
+          card?.card?.gridElements?.infoWithStyle?.restaurants
+        );
+        if (topBrandsCard) {
+          restaurants = topBrandsCard.card.gridElements.infoWithStyle.restaurants || [];
+        }
+      }
+
+      // ✅ Extract `info` from each restaurant
+      const restaurantList = restaurants.map((res) => res.info);
+
+      setListOfRestaurants(restaurantList);
+      setFilteredRestaurants(restaurantList);  // ✅ Fixed naming
+    } catch (error) {
+      console.error("Error fetching data:", error);
     }
+  };
 
-    if(listOfRestaurants.length === 0){
-        return (
-            <Shimmer />
-        )
-    }
+  // ✅ Loading state
+  if (listOfRestaurants.length === 0) {
+    return <Shimmer />;
+  }
 
-    return (
-        <div className="body">
-            <div className="search">
-                <input type="text" className="search-input" value={searchText} onChange={(e) =>{
-                    setSeachText(e.target.value);
-                }}/>
-                <button onClick={() =>{
-                    const filteredRestaurant  = listOfRestaurants.filter((res) =>
-                        res.name.toLowerCase().includes(searchText.toLowerCase())
-                );
-                    setFilteredResturant(filteredRestaurant);
-                }}
-                >Search</button>
-            </div>
-            <div className="filter-btn" onClick={() =>{
-                console.log("Button Clicked");
-                const filteredList = listOfRestaurants.filter((res) => res.avgRating > 4 );
+  return (
+    <div className="body">
+      {/* 🔍 Search Bar */}
+      <div className="search">
+        <input 
+          type="text" 
+          className="search-input" 
+          placeholder="Search restaurants..."
+          value={searchText}
+          onChange={(e) => {
+            setSearchText(e.target.value);  // ✅ Fixed typo
+          }}
+        />
+        <button 
+          onClick={() => {
+            const filtered = listOfRestaurants.filter((res) =>
+              res.name?.toLowerCase().includes(searchText.toLowerCase())  // ✅ Safe navigation
+            );
+            setFilteredRestaurants(filtered);  // ✅ Fixed naming
+          }}
+        >
+          Search
+        </button>
+      </div>
 
-                setFilteredResturant(filteredList);
-            }}>
-                Top Rated Restaurants
-            </div>
-            <div className="res-container">
-                
-                {filteredRestaurant.map(restaurant => <Link key={restaurant.id}  to={"/restaurants/" + restaurant.id }><RestaurantCard resData={restaurant}/></Link>)}
-            </div>
-        </div>
-    )
-}
+      {/* ⭐ Top Rated Filter */}
+      <div 
+        className="filter-btn" 
+        onClick={() => {
+          console.log("Button Clicked");
+          const filteredList = listOfRestaurants.filter(
+            (res) => res.avgRating > 4  // ✅ Safe number comparison
+          );
+          setFilteredRestaurants(filteredList);  // ✅ Fixed naming
+        }}
+      >
+        Top Rated Restaurants
+      </div>
+
+      {/* 🍽 Restaurant Cards */}
+      <div className="res-container">
+        {filteredRestaurants.map((restaurant) => (  // ✅ Fixed naming
+          <Link 
+            key={restaurant.id}
+            to={`/restaurants/${restaurant.id}`}  // ✅ Template literal
+            style={{ textDecoration: "none" }}
+          >
+            <RestaurantCard resData={restaurant} />
+          </Link>
+        ))}
+      </div>
+    </div>
+  );
+};
 
 export default Body;

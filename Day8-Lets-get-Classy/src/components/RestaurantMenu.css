@@ -1,0 +1,311 @@
+/* Swiggy Exact Styling */
+* {
+  box-sizing: border-box;
+}
+
+.restaurant-menu {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px;
+  background: #fff;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  min-height: 100vh;
+}
+
+/* Restaurant Header - Swiggy Style */
+.restaurant-summary {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+  border: 1px solid #f1f1f1;
+  overflow: hidden;
+  margin-bottom: 24px;
+  position: relative;
+}
+
+.restaurant-img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+}
+
+.restaurant-summary-details {
+  padding: 24px;
+}
+
+.restaurant-title {
+  font-size: 28px;
+  font-weight: 600;
+  color: #282c3f;
+  margin: 0 0 8px 0;
+  line-height: 1.3;
+}
+
+.restaurant-tags {
+  font-size: 16px;
+  color: #7e808c;
+  margin: 0 0 20px 0;
+  font-weight: 400;
+}
+
+/* Rating & Details Row - Swiggy Exact */
+.restaurant-details {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.restaurant-rating {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 14px;
+  min-width: 72px;
+  justify-content: center;
+}
+
+.rating-high {
+  background: #48c479;
+  color: #fff;
+}
+
+.rating-low {
+  background: #d1d5db;
+  color: #374151;
+}
+
+.rating-neutral {
+  background: #f3f4f6;
+  color: #6b7280;
+}
+
+.restaurant-rating i {
+  font-size: 12px;
+}
+
+.restaurant-rating-slash {
+  width: 1px;
+  height: 20px;
+  background: #e5e7eb;
+  border-radius: 1px;
+}
+
+/* Menu Section */
+.restaurant-menu-content {
+  background: #fff;
+}
+
+.menu-items-container {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+  border: 1px solid #f1f1f1;
+  overflow: hidden;
+}
+
+.menu-title-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 24px 16px;
+  border-bottom: 1px solid #f1f1f1;
+}
+
+.menu-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #282c3f;
+  margin: 0;
+}
+
+.menu-count {
+  font-size: 14px;
+  color: #7e808c;
+  font-weight: 500;
+  margin: 0;
+}
+
+/* Menu Items List - Swiggy Card Style */
+.menu-items-list {
+  max-height: 70vh;
+  overflow-y: auto;
+  padding: 0 24px 24px;
+}
+
+.menu-items-list::-webkit-scrollbar {
+  width: 4px;
+}
+
+.menu-items-list::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 2px;
+}
+
+.menu-items-list::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 2px;
+}
+
+.menu-item {
+  display: flex;
+  padding: 20px 0;
+  border-bottom: 1px solid #f1f1f1;
+  gap: 16px;
+  transition: background-color 0.2s ease;
+}
+
+.menu-item:hover {
+  background: #f8fafc;
+}
+
+.menu-item:last-child {
+  border-bottom: none;
+}
+
+.menu-item-details {
+  flex: 1;
+  min-width: 0;
+}
+
+.item-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #282c3f;
+  margin: 0 0 4px 0;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.item-cost {
+  font-size: 16px;
+  font-weight: 700;
+  color: #ee4d2d;
+  margin: 0 0 8px 0;
+}
+
+.item-desc {
+  font-size: 14px;
+  color: #7e808c;
+  line-height: 1.5;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.menu-img-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+  min-width: 120px;
+}
+
+.menu-item-img {
+  width: 100px;
+  height: 96px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.add-btn {
+  background: #ee4d2d;
+  color: #fff;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  min-width: 80px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.add-btn:hover {
+  background: #f15a39;
+  transform: translateY(-1px);
+}
+
+.add-btn:active {
+  transform: translateY(0);
+}
+
+/* Responsive - Mobile First (Swiggy Style) */
+@media (max-width: 768px) {
+  .restaurant-menu {
+    padding: 12px;
+  }
+  
+  .restaurant-summary {
+    margin-bottom: 16px;
+  }
+  
+  .restaurant-img {
+    height: 160px;
+  }
+  
+  .restaurant-summary-details {
+    padding: 20px 16px;
+  }
+  
+  .restaurant-title {
+    font-size: 24px;
+  }
+  
+  .restaurant-tags {
+    font-size: 14px;
+  }
+  
+  .restaurant-details {
+    gap: 12px;
+  }
+  
+  .menu-title-wrap {
+    padding: 20px 16px 12px;
+  }
+  
+  .menu-items-list {
+    padding: 0 16px 20px;
+  }
+  
+  .menu-item {
+    padding: 16px 0;
+    gap: 12px;
+  }
+  
+  .menu-img-wrapper {
+    min-width: 88px;
+  }
+  
+  .menu-item-img {
+    width: 80px;
+    height: 72px;
+  }
+}
+
+/* Loading State */
+.menu-items-list:empty::after {
+  content: '';
+  display: block;
+  height: 200px;
+}
+
+/* High Performance Scroll */
+.menu-items-list {
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
