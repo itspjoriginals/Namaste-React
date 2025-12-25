@@ -3,7 +3,7 @@ import Contact from "../components/Contact"
 import "@testing-library/jest-dom"
 
 
-test("Should load contact us component", () =>{
+it("Should load contact us component", () =>{
 
     render(<Contact/>);
 
@@ -13,7 +13,7 @@ test("Should load contact us component", () =>{
 
 });
 
-test("Should load button inside contact us component", () =>{
+it("Should load button inside contact us component", () =>{
 
     render(<Contact/>);
 
