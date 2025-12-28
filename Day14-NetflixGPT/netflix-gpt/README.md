@@ -1,7 +1,17 @@
 # Netflix GPT
 
 - Create React App
-- COnfigured Tailwind 3.4.17
+- Configured Tailwind 3.4.17
+- Header
+- Routing of App
+- Login Form
+- Sign up Form
+- Form Validation [useRef Hook]
+- Firebase Setup
+- Deploying our app to production
+- Create signup user account
+- Implement Sign in user api
+- Created Redux Store with user Slice
 
 
 # Features
@@ -19,3 +29,8 @@
     - Search Bar
     - Movie Suggestions
     
+# Steps to Firebase Deployment
+    - Install firebase CLI - `npm install -g firebase-tools`
+    - Firebase Login - `firebase login`
+    - Initilize Firebase - `firebase init`, then select Hoisting
+    - Deploy Command - `firebase deploy`

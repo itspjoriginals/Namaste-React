@@ -1,9 +1,85 @@
-import { useState } from "react"
+import { useRef, useState } from "react"
 import Header from "./Header"
+import { checkValidateData } from "../utils/validate";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile  } from "firebase/auth";
+import { useNavigate } from 'react-router';
+
+import {auth} from '../utils/firebase'
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice";
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
-    const toggleSignInForm = () => {
+  const name = useRef(null);
+  const email = useRef(null);
+  const password = useRef(null);
+  const [errorMessage, setErrorMessage] = useState(null);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const handleButtonClick = () => {
+
+const msg = !isSignInForm 
+  ? checkValidateData(email.current.value, password.current.value, name.current.value)
+  : checkValidateData(email.current.value, password.current.value);
+    setErrorMessage(msg);
+
+    if(msg) return;
+
+    if(!isSignInForm){
+      //Sign up logic
+      createUserWithEmailAndPassword(auth, email.current.value, password.current.value)
+  .then((userCredential) => {
+    // Signed up 
+    const user = userCredential.user;
+    updateProfile(user, {
+  displayName: "name.current.value", photoURL: "https://avatars.githubusercontent.com/u/76199865?v=4"
+}).then(() => {
+  const {uid, email, displayName, photoURL} = auth.currentUser;
+      dispatch(addUser({uid:uid, email:email, displayName: displayName, photoURL:photoURL}));
+  navigate('/browse')
+  // ...
+}).catch((error) => {
+  setErrorMessage(error.message);
+});
+    
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+
+    setErrorMessage(errorCode + " - " + errorMessage)
+    // ..
+  });
+    }
+    else{
+      //sign in logic
+      signInWithEmailAndPassword(auth, email.current.value, password.current.value)
+  .then((userCredential) => {
+    // Signed in 
+    const user = userCredential.user;
+    console.log(user);
+    navigate('/browse')
+    
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+
+    setErrorMessage(errorCode + "- " + errorMessage);
+  });
+
+    }
+
+
+
+  }
+
+  const handleFormSubmit= (e) => {
+    e.preventDefault();
+  }
+
+  const toggleSignInForm = () => {
       setIsSignInForm(!isSignInForm);
     }
 
@@ -31,9 +107,15 @@ const Login = () => {
             <p className="text-gray-400">Enter your email and password to continue.</p>
           </div>
           
-          <form className="space-y-4">
+          <form className="space-y-4" onSubmit={handleFormSubmit}>
             <div>
+              {!isSignInForm && (
+                <input ref={name} type="text" placeholder="Full Name"
+                className="w-full p-4 mb-4 bg-gray-800/70 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/50 transition-all duration-200"
+                required />
+              )}
               <input 
+              ref={email}
                 type="email" 
                 placeholder="Email Address" 
                 className="w-full p-4 bg-gray-800/70 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/50 transition-all duration-200"
@@ -42,13 +124,15 @@ const Login = () => {
             </div>
             <div>
               <input 
+              ref={password}
                 type="password" 
                 placeholder="Password" 
                 className="w-full p-4 bg-gray-800/70 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/50 transition-all duration-200"
                 required
               />
+              <p className="text-red-500 font-bold text-lg px-2 py-2">{errorMessage}</p>
             </div>
-            <button className="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-4 px-6 rounded-lg border border-transparent transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+            <button className="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-4 px-6 rounded-lg border border-transparent transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5" onClick={handleButtonClick}>
               {isSignInForm ? "Sign In" : "Sign Up"}
             </button>
           </form>
