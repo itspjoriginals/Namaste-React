@@ -1,26 +1,45 @@
-import { signOut } from "firebase/auth"
+import { onAuthStateChanged, signOut } from "firebase/auth"
 import { auth } from "../utils/firebase"
 import { useNavigate } from "react-router-dom"
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { addUser, removeUser } from "../utils/userSlice";
+import { LOGO } from "../utils/constants";
 
 const Header = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const user = useSelector((store) => store.user);
 
   const handleSignOut =  () => {
-    signOut(auth).then(() => {
-  navigate('/')
-}).catch((error) => {
+    signOut(auth)
+    .then(() => {})
+    .catch((error) => {
   navigate('/error')
 });
   }
+
+      useEffect(() => {
+      const unsubscribe = onAuthStateChanged(auth, (user) => {
+        if (user) {
+          const {uid, email, displayName, photoURL} = user;
+          dispatch(addUser({uid:uid, email:email, displayName: displayName, photoURL:photoURL}));
+          navigate('/browse')
+        } else {
+          dispatch(removeUser());
+          navigate('/');
+        }
+});
+
+  return () => unsubscribe();
+    }, [])
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 px-4 md:px-8 py-2 bg-gradient-to-b from-black/95 via-black/60 to-transparent backdrop-blur-md border-b border-black/20">
       <div className="flex items-center justify-between w-full max-w-7xl mx-auto">
         {/* Logo */}
         <img 
-          src="https://help.nflxext.com/helpcenter/OneTrust/oneTrust_production_2025-12-03/consent/87b6a5c0-0104-4e96-a291-092c11350111/019ae4b5-d8fb-7693-90ba-7a61d24a8837/logos/dd6b162f-1a32-456a-9cfe-897231c7763c/4345ea78-053c-46d2-b11e-09adaef973dc/Netflix_Logo_PMS.png" 
+          src={LOGO}
           alt="Netflix Logo"
           className="w-32 md:w-44 h-10 md:h-12 object-contain hover:brightness-110 transition-all duration-200 cursor-pointer"
         />

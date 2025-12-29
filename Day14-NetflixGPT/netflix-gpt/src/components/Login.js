@@ -2,11 +2,11 @@ import { useRef, useState } from "react"
 import Header from "./Header"
 import { checkValidateData } from "../utils/validate";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile  } from "firebase/auth";
-import { useNavigate } from 'react-router';
 
 import {auth} from '../utils/firebase'
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
+import { BG_IMG } from "../utils/constants";
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
@@ -14,7 +14,6 @@ const Login = () => {
   const email = useRef(null);
   const password = useRef(null);
   const [errorMessage, setErrorMessage] = useState(null);
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleButtonClick = () => {
@@ -37,8 +36,6 @@ const msg = !isSignInForm
 }).then(() => {
   const {uid, email, displayName, photoURL} = auth.currentUser;
       dispatch(addUser({uid:uid, email:email, displayName: displayName, photoURL:photoURL}));
-  navigate('/browse')
-  // ...
 }).catch((error) => {
   setErrorMessage(error.message);
 });
@@ -58,8 +55,6 @@ const msg = !isSignInForm
   .then((userCredential) => {
     // Signed in 
     const user = userCredential.user;
-    console.log(user);
-    navigate('/browse')
     
   })
   .catch((error) => {
@@ -90,7 +85,7 @@ const msg = !isSignInForm
       {/* Background Image */}
       <div className="fixed inset-0 -z-10">
         <img 
-          src="https://assets.nflxext.com/ffe/siteui/vlv3/f86b16bf-4c16-411c-8357-22d79beed09c/web/IN-en-20251222-TRIFECTA-perspective_d4acb127-f63f-4a98-ad0b-4317b0b3e500_small.jpg"
+          src={BG_IMG}
           alt="Netflix background"
           className="w-full h-full object-cover brightness-90"
         />
