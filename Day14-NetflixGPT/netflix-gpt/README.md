@@ -19,15 +19,18 @@
 - unsubscribe to the onAuthStateChanged callback
 - Add hardcoded vlues to the constants file
 - Register TMDB API & create ana app & get access token
-- GEt data from TMDB now playing movies list API
+- Get data from TMDB now playing movies list API
 - Custom hook for Now Playing Movies & movie trailer
 - Create movieSlice
 - Update store with movies data
 - Planning for mainContainer & secondary container
-- FEtch data trailer video 
+- Fetch data trailer video 
 - Update store with trailer video data
 - Embedded the youtube video and make it autoplay and mute
 - Add Tailwind to MainContainer
+- Build Secondary Component
+- Build Movie List
+- Build Movie Card
 
 
 
