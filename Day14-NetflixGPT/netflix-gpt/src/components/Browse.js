@@ -6,8 +6,11 @@ import Header from "./Header";
 import MainContainer from "./MainContainer";
 import SecondaryContainer from "./SecondaryContainer";
 import useActionMovies from "../hooks/useActionMovies";
+import GptSearch from "./GptSearch";
+import { useSelector } from "react-redux";
 
 const Browse = () => {
+  const showGptSearch = useSelector((store) => store.gpt.showGptSearch);
   useNowPlayingMovies();
   usePopularMovies();
   useTopRatedMovies();
@@ -21,13 +24,10 @@ const Browse = () => {
       <div className="fixed top-0 left-0 right-0 z-50">
         <Header />
       </div>
-
-      {/* Main Hero */}
-      <main className="pt-16">
+      {showGptSearch ? <GptSearch /> : <main className="pt-16">
         <MainContainer />
         <SecondaryContainer />
-      </main>
-
+      </main> }
     </div>
   );
 };

@@ -31,6 +31,13 @@
 - Build Secondary Component
 - Build Movie List
 - Build Movie Card
+- TMBD Image CDN URL
+- Added tailwind in browse page 
+- Create custom hooks [usePopularMovies, useComedyMovies, useTopRatedMovies, useActionMovies]
+- GPT Search Page
+- GPT Search Bar
+- Multilingual Functionality in GPT Page
+
 
 
 
