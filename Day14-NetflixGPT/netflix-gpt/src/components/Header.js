@@ -1,86 +1,111 @@
-import { onAuthStateChanged, signOut } from "firebase/auth"
-import { auth } from "../utils/firebase"
-import { useNavigate } from "react-router-dom"
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { auth } from "../utils/firebase";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { addUser, removeUser } from "../utils/userSlice";
 import { LOGO } from "../utils/constants";
-import { toggleGptSearchView } from '../utils/gptSlice'
+import { toggleGptSearchView } from "../utils/gptSlice";
 import { SUPPORTED_LANGUAGES } from "../utils/constants";
 import { changeLanguage } from "../utils/configSlice";
 
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const user = useSelector((store) => store.user);
-  const showGptSearch = useSelector((store) => store.gpt.showGptSearch)
-  const handleSignOut =  () => {
-    signOut(auth)
-    .then(() => {})
-    .catch((error) => {
-  navigate('/error')
-});
-  }
+  const showGptSearch = useSelector((store) => store.gpt.showGptSearch);
+
+  const handleSignOut = () => {
+    signOut(auth).catch(() => navigate("/error"));
+  };
 
   const handleGptSearchClick = () => {
-
     dispatch(toggleGptSearchView());
-  }
+  };
 
   const handleLanguageChange = (e) => {
-    dispatch(changeLanguage(e.target.value))
+    dispatch(changeLanguage(e.target.value));
+  };
 
-  }
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const { uid, email, displayName, photoURL } = user;
+        dispatch(addUser({ uid, email, displayName, photoURL }));
+        navigate("/browse");
+      } else {
+        dispatch(removeUser());
+        navigate("/");
+      }
+    });
 
-      useEffect(() => {
-      const unsubscribe = onAuthStateChanged(auth, (user) => {
-        if (user) {
-          const {uid, email, displayName, photoURL} = user;
-          dispatch(addUser({uid:uid, email:email, displayName: displayName, photoURL:photoURL}));
-          navigate('/browse')
-        } else {
-          dispatch(removeUser());
-          navigate('/');
-        }
-});
-
-  return () => unsubscribe();
-    }, [])
+    return () => unsubscribe();
+  }, []);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 px-4 md:px-8 py-2 bg-gradient-to-b from-black/95 via-black/60 to-transparent backdrop-blur-md border-b border-black/20">
-      <div className="flex items-center justify-between w-full max-w-7xl mx-auto">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-black/60 backdrop-blur-lg border-b border-white/10">
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 md:px-8">
+
         {/* Logo */}
-        <img 
+        <img
           src={LOGO}
-          alt="Netflix Logo"
-          className="w-32 md:w-44 h-10 md:h-12 object-contain hover:brightness-110 transition-all duration-200 cursor-pointer"
+          alt="Netflix"
+          className="h-9 cursor-pointer object-contain transition-opacity hover:opacity-90"
         />
-        
-        {/* User Profile - Right Side */}
-        {user && (<div className="flex items-center space-x-2">
-          {showGptSearch && (<select className="px-4 py-1.5 bg-red-600/90 hover:bg-red-700 text-white text-sm font-medium rounded-md border border-red-600/50 backdrop-blur-sm hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl whitespace-nowrap" onChange={handleLanguageChange}>
-           {SUPPORTED_LANGUAGES.map((lang) => <option key={lang.identifier} value={lang.identifier}>{lang.name}</option>)}
-          </select>)}
-          <button className="px-4 py-1.5 bg-red-600/90 hover:bg-red-700 text-white text-sm font-medium rounded-md border border-red-600/50 backdrop-blur-sm hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl whitespace-nowrap"
-          onClick={handleGptSearchClick}>{showGptSearch ? "Home" : "GPT Search"}</button>
-          <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-white/30 hover:border-white/50 transition-all duration-200 cursor-pointer hover:scale-105">
-            <img 
-              src={user.photoURL}
-              alt="Profile"
-              className="w-full h-full object-cover"
-            />
+
+        {/* Right Section */}
+        {user && (
+          <div className="flex items-center gap-4">
+
+            {/* Language Selector (only in GPT mode) */}
+            {showGptSearch && (
+              <select
+                onChange={handleLanguageChange}
+                className="rounded-md bg-black/60 px-3 py-1.5 text-sm text-white border border-white/20 focus:outline-none focus:border-white/40"
+              >
+                {SUPPORTED_LANGUAGES.map((lang) => (
+                  <option
+                    key={lang.identifier}
+                    value={lang.identifier}
+                    className="bg-black"
+                  >
+                    {lang.name}
+                  </option>
+                ))}
+              </select>
+            )}
+
+            {/* GPT Toggle Button (Primary CTA) */}
+            <button
+              onClick={handleGptSearchClick}
+              className="rounded-md bg-red-600 px-4 py-1.5 text-sm font-medium text-white transition hover:bg-red-700"
+            >
+              {showGptSearch ? "Home" : "GPT Search"}
+            </button>
+
+            {/* Profile Image */}
+            <div className="h-9 w-9 overflow-hidden rounded-full border border-white/30 hover:border-white/60 transition">
+              <img
+                src={user.photoURL}
+                alt="Profile"
+                className="h-full w-full object-cover"
+              />
+            </div>
+
+            {/* Sign Out (Secondary Action) */}
+            <button
+              onClick={handleSignOut}
+              className="text-sm text-gray-300 hover:text-white transition"
+            >
+              Sign out
+            </button>
+
           </div>
-          <button
-            onClick={handleSignOut}
-            className="px-4 py-1.5 bg-red-600/90 hover:bg-red-700 text-white text-sm font-medium rounded-md border border-red-600/50 backdrop-blur-sm hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl whitespace-nowrap"
-          >
-            Sign Out
-          </button>
-        </div>)}
+        )}
       </div>
     </header>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

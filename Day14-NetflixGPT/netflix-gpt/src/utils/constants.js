@@ -2,15 +2,12 @@ export const LOGO = 'https://help.nflxext.com/helpcenter/OneTrust/oneTrust_produ
 export const BG_IMG = "https://assets.nflxext.com/ffe/siteui/vlv3/f86b16bf-4c16-411c-8357-22d79beed09c/web/IN-en-20251222-TRIFECTA-perspective_d4acb127-f63f-4a98-ad0b-4317b0b3e500_small.jpg";
 
 export const USER_AVATAR = 'https://wallpapers.com/images/hd/netflix-profile-pictures-1000-x-1000-qo9h82134t9nv0j0.jpg';
-export const API_ACCESS_TOKEN = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzOGJjYmJhYzdiOWE1NWEwMzU1NGExMzYxMjVmYWMzYSIsIm5iZiI6MTc2NzAxNTc3OC43NTYsInN1YiI6IjY5NTI4NTYyMDE1N2JkZDZmZDg4ZTFjMCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.XVfJefL-eSgtx_iZgYkEjDuevdmZ852m_ZpkcGPxVeQ';
-
-export const API_KEY = '38bcbbac7b9a55a03554a136125fac3a';
 
 export const API_OPTIONS = {
     method : "GET",
     headers: {
         accept: "application/json",
-        Authorization: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzOGJjYmJhYzdiOWE1NWEwMzU1NGExMzYxMjVmYWMzYSIsIm5iZiI6MTc2NzAxNTc3OC43NTYsInN1YiI6IjY5NTI4NTYyMDE1N2JkZDZmZDg4ZTFjMCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.XVfJefL-eSgtx_iZgYkEjDuevdmZ852m_ZpkcGPxVeQ"
+        Authorization: "Bearer " + process.env.REACT_APP_TMDB_API_KEY,
     },
 };
 
@@ -21,3 +18,6 @@ export const SUPPORTED_LANGUAGES = [
     {identifier : "hindi", name: "Hindi"},
     {identifier : "maithili", name: "Maithili"},
 ];
+
+export const OPENAI_API = process.env.REACT_APP_OPENAI_API_KEY
+

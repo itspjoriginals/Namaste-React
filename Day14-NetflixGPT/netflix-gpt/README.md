@@ -37,7 +37,7 @@
 - GPT Search Page
 - GPT Search Bar
 - Multilingual Functionality in GPT Page
-
+- Integrate GPT APIs
 
 
 
