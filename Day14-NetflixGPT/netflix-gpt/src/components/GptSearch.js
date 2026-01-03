@@ -4,33 +4,38 @@ import { BG_IMG } from "../utils/constants";
 
 const GptSearch = () => {
   return (
-    <div className="relative min-h-screen w-full text-white">
-
-      
-      <div className="fixed inset-0 -z-10">
-        <img
-          src={BG_IMG}
-          alt="Background"
-          className="h-screen w-screen object-cover"
-        />
-        <div className="absolute inset-0 bg-black/50" />
+    <>
+      {/* Background - Fullscreen Fixed */}
+      <div 
+        className="fixed inset-0 z-0"
+        style={{ 
+          backgroundImage: `url(${BG_IMG})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          backgroundAttachment: 'fixed'
+        }}
+      >
+        {/* Overlay for readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/60 to-black/95" />
       </div>
 
-      
-      <div className="relative mx-auto flex min-h-screen w-full max-w-7xl flex-col px-4 md:px-8">
+      {/* Scrollable Content - Higher z-index */}
+      <div className="relative z-10 min-h-screen pt-24 md:pt-32 pb-16">
+        <div className="mx-auto w-full max-w-7xl px-4 md:px-8">
+          
+          {/* Search Bar - Sticky Top */}
+          <div className="sticky top-4 z-20 mb-16 md:mb-24 max-w-2xl mx-auto">
+            <GptSearchBar />
+          </div>
 
-        
-        <div className=" flex mt-32 flex-col items-center justify-center px-4">
-          <GptSearchBar />
+          {/* Movie Suggestions */}
+          <div className="min-h-[60vh]">
+            <GptMovieSuggestions />
+          </div>
         </div>
-
-        
-        <div className="flex-1 overflow-y-auto pb-16">
-          <GptMovieSuggestions />
-        </div>
-
       </div>
-    </div>
+    </>
   );
 };
 
